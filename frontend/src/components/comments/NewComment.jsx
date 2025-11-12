@@ -1,5 +1,5 @@
 import React from "react";
-
+const apiUrl = import.meta.env.VITE_API_URL;
 export const NewComment = ({ index, onCommentAdded }) => {
   async function handleOnSubmitComment(e) {
     e.preventDefault();
@@ -11,19 +11,16 @@ export const NewComment = ({ index, onCommentAdded }) => {
     }
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/posts/${index}/comments`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("JWT")}`,
-          },
-          body: JSON.stringify({
-            comment: commentContent,
-          }),
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/posts/${index}/comments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("JWT")}`,
+        },
+        body: JSON.stringify({
+          comment: commentContent,
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("Erreur lors de l'envoi : " + response.status);

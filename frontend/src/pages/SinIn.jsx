@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../providers/AuthProviders";
 import { InputField } from "../components/commun/inputField";
 import { ErrorMessage } from "../components/commun/ErrorMessage";
-
+const apiUrl = import.meta.env.VITE_API_URL;
 export const SinIn = () => {
   const [displayError, setDisplayError] = useState(null);
   const [isFormValid, setIsFormValid] = useState(false);
@@ -67,7 +67,7 @@ export const SinIn = () => {
   async function handleOnSubmitForm(e) {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:3000/api/auth/register`, {
+      const response = await fetch(`${apiUrl}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

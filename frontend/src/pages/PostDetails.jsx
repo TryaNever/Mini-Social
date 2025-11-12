@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { DisplayComment } from "../components/comments/DisplayComment";
 import { Like } from "../components/posts/Like";
-
+const apiUrl = import.meta.env.VITE_API_URL;
 export const PostDetails = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
@@ -11,7 +11,7 @@ export const PostDetails = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/posts/${id}`);
+        const response = await fetch(`${apiUrl}/api/posts/${id}`);
         if (!response.ok) throw new Error("Failed to fetch post");
 
         const res = await response.json();

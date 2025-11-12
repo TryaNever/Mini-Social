@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Post } from "./Post";
 
+const apiUrl = import.meta.env.VITE_API_URL;
 export const PostList = () => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch("http://159.69.22.78/api/posts");
+        const response = await fetch(`${apiUrl}/api/posts`);
         if (!response.ok) {
           throw new Error("Failed to fetch" + response.ok);
         }

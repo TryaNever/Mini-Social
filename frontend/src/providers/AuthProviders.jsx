@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import Loader from "../components/commun/Loader";
 
 const AuthContext = createContext();
-
+const apiUrl = import.meta.env.VITE_API_URL;
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
         return;
       }
       try {
-        const res = await fetch("http://localhost:3000/api/auth/me", {
+        const res = await fetch(`${apiUrl}/api/auth/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) {

@@ -1,16 +1,13 @@
 import { useState } from "react";
-
+const apiUrl = import.meta.env.VITE_API_URL;
 export const Like = ({ post }) => {
   const [like, setLike] = useState(false);
   async function handleLike() {
     try {
-      const response = await fetch(
-        `http://localhost:3000/api/posts/${post.id}/like`,
-        {
-          method: "PUT",
-          headers: { Authorization: `Bearer ${localStorage.getItem("JWT")}` },
-        }
-      );
+      const response = await fetch(`${apiUrl}/api/posts/${post.id}/like`, {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${localStorage.getItem("JWT")}` },
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch" + response.ok);
       }
