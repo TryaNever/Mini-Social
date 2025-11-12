@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { ErrorMessage } from "../components/commun/ErrorMessage";
 import { useAuth } from "../providers/AuthProviders";
 import { InputField } from "../components/commun/inputField";
+
 const apiUrl = import.meta.env.VITE_API_URL;
+
 export const Login = () => {
   const [displayError, setDisplayError] = useState(null);
   const [isFormValid, setIsFormValid] = useState(false);
@@ -12,10 +14,8 @@ export const Login = () => {
     password: "",
   });
   const [validationError, setValidationError] = useState({});
-  const { setToken } = useAuth();
   const navigate = useNavigate();
-
-  localStorage.removeItem("JWT");
+  const { setToken } = useAuth();
 
   const validateEmail = (email) => {
     if (!email) return "L’email est requis";
@@ -33,17 +33,13 @@ export const Login = () => {
 
   function handleOnChangeInput(e) {
     const { name, value } = e.target;
-
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     let errorMessage = "";
     if (name === "email") errorMessage = validateEmail(value);
     if (name === "password") errorMessage = validatePassword(value);
 
-    setValidationError((prev) => ({
-      ...prev,
-      [name]: errorMessage,
-    }));
+    setValidationError((prev) => ({ ...prev, [name]: errorMessage }));
 
     const isValid =
       !validateEmail(name === "email" ? value : formData.email) &&
@@ -57,9 +53,7 @@ export const Login = () => {
     try {
       const response = await fetch(`${apiUrl}/api/auth/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
@@ -70,9 +64,11 @@ export const Login = () => {
       if (response.status === 500)
         throw new Error("Erreur serveur, veuillez réessayer");
 
-      const { token } = await response.json();
-      localStorage.setItem("JWT", token);
-      setToken(token);
+      const tokenData = await response.json();
+
+      localStorage.setItem("JWT", tokenData.token);
+      setToken(tokenData.token);
+
       navigate("/");
     } catch (error) {
       setDisplayError(error.message);
@@ -88,6 +84,7 @@ export const Login = () => {
         <h2 className="text-2xl font-semibold text-gray-800 text-center mb-4">
           Connexion
         </h2>
+
         <InputField
           label="Adresse Mail"
           type="text"
@@ -96,13 +93,13 @@ export const Login = () => {
           validationError={validationError.email}
           placeholder="votre@mail.com"
         />
+
         <InputField
           label="Votre mot de passe"
           type="password"
           name="password"
           onchange={handleOnChangeInput}
           validationError={validationError.password}
-          placeholder=""
         />
 
         <div className="flex justify-center">
@@ -113,6 +110,7 @@ export const Login = () => {
             className="bg-blue-600 text-white font-semibold py-2 px-6 rounded-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-400 focus:outline-none transition duration-150 cursor-pointer disabled:bg-blue-300 disabled:cursor-default"
           />
         </div>
+
         {displayError && <ErrorMessage displayError={displayError} />}
       </form>
     </div>

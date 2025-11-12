@@ -4,12 +4,13 @@ import { useAuth } from "../../providers/AuthProviders";
 export const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { currentUser, isAuthenticated, loading } = useAuth();
+  const { currentUser, isAuthenticated, logout } = useAuth();
 
   function handleLogout() {
-    localStorage.removeItem("JWT");
-    navigate(0);
+    logout();
+    navigate("/connexion");
   }
+
   return (
     <nav className="sticky top-0 z-50 bg-slate-900 border-b border-slate-700/50 shadow-xl">
       <div className="max-w-7xl mx-auto px-6 py-4">
