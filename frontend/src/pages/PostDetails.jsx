@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { DisplayComment } from "../components/comments/DisplayComment";
 import { Like } from "../components/posts/Like";
 const apiUrl = import.meta.env.VITE_API_URL;
+
 export const PostDetails = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
