@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Empêche l'indexation des fichiers inutiles
+Disallow: /*.map$
+Disallow: /*.json$
+
+# Sitemap
+Sitemap: https://www.example.com/sitemap.xml

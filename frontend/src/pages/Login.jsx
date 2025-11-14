@@ -6,7 +6,7 @@ import { InputField } from "../components/commun/inputField";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export const Login = () => {
+export default function Login() {
   const [displayError, setDisplayError] = useState(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const [formData, setFormData] = useState({
@@ -115,4 +115,4 @@ export const Login = () => {
       </form>
     </div>
   );
-};
+}

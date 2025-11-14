@@ -1,23 +1,25 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home } from "./pages/Home";
-import { Login } from "./pages/Login";
-import { SinIn } from "./pages/SinIn";
+
 import { Navbar } from "./components/layout/NavBar";
-import { PostDetails } from "./pages/PostDetails";
 import { ProtectedRoute } from "./components/routes/ProtectedRoute";
 import { AuthProvider } from "./providers/AuthProviders";
-import { Profile } from "./pages/Profile";
+import React, { Suspense } from "react";
+const Home = React.lazy(() => import("./pages/Home"));
+const Login = React.lazy(() => import("./pages/Login"));
+const SinIn = React.lazy(() => import("./pages/SinIn"));
+const PostDetails = React.lazy(() => import("./pages/PostDetails"));
+
 
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Navbar />
-        <Routes>
-          <Route index element={<Home />} />
-          <Route path="connexion" element={<Login />} />
-          <Route path="inscription" element={<SinIn />} />
-
+        <Suspense fallback={<p>Chargement…</p>}>
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path="connexion" element={<Login />} />
+            <Route path="inscription" element={<SinIn />} />
           <Route
             path="posts/:id"
             element={
@@ -35,6 +37,11 @@ export default function App() {
             }
           ></Route>
         </Routes>
+
+         
+ 
+        </Suspense>
+
       </AuthProvider>
     </BrowserRouter>
   );
