@@ -4,7 +4,13 @@ import { Like } from "./Like";
 import { NewComment } from "../comments/NewComment";
 
 export const Post = ({ post, index }) => {
+  let image_url = post.image_url;
+
+  if (image_url) {
+  }
+
   return (
+
     <Suspense>
       <div
         key={index}

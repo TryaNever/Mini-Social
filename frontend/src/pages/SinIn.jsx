@@ -40,8 +40,6 @@ export default function SinIn() {
   };
 
   function handleOnChangeInput(e) {
-    console.log("test");
-
     const { name, value } = e.target;
 
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -59,7 +57,7 @@ export default function SinIn() {
     const isValid =
       !validateEmail(name === "email" ? value : formData.email) &&
       !validatePassword(name === "password" ? value : formData.password) &&
-      !validatePassword(name === "username" ? value : formData.username);
+      !validateUsername(name === "username" ? value : formData.username);
 
     setIsFormValid(isValid);
   }
