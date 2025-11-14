@@ -22,8 +22,8 @@ export const PostList = () => {
   }, []);
 
   return posts.map((post, i) => {
-    if (i > 5) return;
+    if (i > 5) return null;
 
-    return <Post index={post.id} post={post} />;
+    return <Post key={post.id} index={post.id} post={post} />;
   });
 };

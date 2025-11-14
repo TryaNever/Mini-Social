@@ -11,7 +11,7 @@ export const Post = ({ post, index }) => {
     >
       <img
         className="w-full h-40 object-cover"
-        src={post.image_url}
+        src={`${post.image_url}.webp`}
         alt="Post image"
       />
       <div className="p-4 space-y-3">

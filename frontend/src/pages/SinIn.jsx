@@ -4,7 +4,7 @@ import { useAuth } from "../providers/AuthProviders";
 import { InputField } from "../components/commun/inputField";
 import { ErrorMessage } from "../components/commun/ErrorMessage";
 const apiUrl = import.meta.env.VITE_API_URL;
-export const SinIn = () => {
+export default function SinIn() {
   const [displayError, setDisplayError] = useState(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const [validationError, setValidationError] = useState({});
@@ -138,4 +138,4 @@ export const SinIn = () => {
       </form>
     </div>
   );
-};
+}

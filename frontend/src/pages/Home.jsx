@@ -1,6 +1,6 @@
 import { PostList } from "../components/posts/PostList";
 
-export const Home = () => {
+export default function Home() {
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Hello from React + Vite + Express + Mysql + Docker</h1>
@@ -9,4 +9,4 @@ export const Home = () => {
       </div>
     </div>
   );
-};
+}
