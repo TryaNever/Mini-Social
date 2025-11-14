@@ -6,6 +6,7 @@ import { Navbar } from "./components/layout/NavBar";
 import { PostDetails } from "./pages/PostDetails";
 import { ProtectedRoute } from "./components/routes/ProtectedRoute";
 import { AuthProvider } from "./providers/AuthProviders";
+import { Profile } from "./pages/Profile";
 
 export default function App() {
   return (
@@ -25,6 +26,14 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          ></Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter>

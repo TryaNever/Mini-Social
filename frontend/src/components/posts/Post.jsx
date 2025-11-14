@@ -4,6 +4,11 @@ import { Like } from "./Like";
 import { NewComment } from "../comments/NewComment";
 
 export const Post = ({ post, index }) => {
+  let image_url = post.image_url;
+
+  if (image_url) {
+  }
+
   return (
     <div
       key={index}
@@ -11,7 +16,7 @@ export const Post = ({ post, index }) => {
     >
       <img
         className="w-full h-40 object-cover"
-        src={post.image_url}
+        src={post.author_image_url || "/default-avatar.png"}
         alt="Post image"
       />
       <div className="p-4 space-y-3">

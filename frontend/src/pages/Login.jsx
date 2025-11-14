@@ -64,10 +64,10 @@ export const Login = () => {
       if (response.status === 500)
         throw new Error("Erreur serveur, veuillez réessayer");
 
-      const tokenData = await response.json();
+      const { token } = await response.json();
 
-      localStorage.setItem("JWT", tokenData.token);
-      setToken(tokenData.token);
+      localStorage.setItem("JWT", token);
+      setToken(token);
 
       navigate("/");
     } catch (error) {
