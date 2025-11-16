@@ -35,7 +35,7 @@ export default function SinIn() {
   const validateUsername = (username) => {
     if (!username.trim()) return "Le champ ne peut pas être vide";
     if (username.length < 6 || username.length > 16)
-      return "Le mot de passe doit être entre 12 et 20 caractères";
+      return "Le npm d'utilisateur doit être entre 6 et 16 caractères";
     return null;
   };
 

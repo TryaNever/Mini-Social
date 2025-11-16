@@ -1,47 +1,83 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useAuth } from "../providers/AuthProviders";
 import { InputField } from "../components/commun/inputField";
 import { ErrorMessage } from "../components/commun/ErrorMessage";
+import { PpChooseModal } from "../components/modals/PpChooseModal";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export const Profile = () => {
-  const { currentUser, setToken } = useAuth();
-  const navigate = useNavigate();
+  const { currentUser, setRefresh, refresh } = useAuth();
 
   const [user, setUser] = useState(currentUser);
   const [formData, setFormData] = useState({
-    username: user.username,
-    image_url: user.image_url || "",
+    username: currentUser?.username || "",
+    image_url: currentUser?.image_url || "",
   });
-  const [displayError, setDisplayError] = useState(null);
+
+  const [errors, setErrors] = useState([]);
   const [isFormValid, setIsFormValid] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const formattedDate = new Date(user.created_at).toLocaleDateString("fr-FR", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-
-  // Validation simple : username non vide
-  const validateUsername = (username) => {
-    if (!username.trim()) return "Le pseudo ne peut pas être vide";
-    return null;
+  const checkImageExists = (url) => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = url;
+    });
   };
 
-  const handleChange = (e) => {
+  const validateUsername = (username) => {
+    const messages = [];
+    if (!username.trim()) messages.push("Le champ ne peut pas être vide");
+    if (username.length < 6 || username.length > 16)
+      messages.push("Le nom d'utilisateur doit être entre 6 et 16 caractères");
+    return messages;
+  };
+
+  const validateImageUrl = async (url) => {
+    const isValid = await checkImageExists(url);
+
+    setErrors((prev) => {
+      let updated = prev.filter((msg) => msg !== "L'image n'affiche rien");
+
+      if (!isValid) updated.push("L'image n'affiche rien");
+
+      setIsFormValid(updated.length === 0);
+      return updated;
+    });
+  };
+
+  const handleModalImageSelect = (newUrl) => {
+    setFormData((prev) => ({ ...prev, image_url: newUrl }));
+    validateImageUrl(newUrl);
+  };
+
+  const handleFieldChange = (e) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({ ...prev, [name]: value }));
 
-    const errorMessage = name === "username" ? validateUsername(value) : null;
-    setDisplayError(errorMessage);
-    setIsFormValid(!errorMessage);
-  };
+    if (name === "username") {
+      const usernameErrors = validateUsername(value);
+      setErrors(usernameErrors);
+      setIsFormValid(usernameErrors.length === 0);
+    }
 
-  const handleOnSubmitForm = async (e) => {
+    if (name === "image_url") {
+      validateImageUrl(value);
+    }
+  };
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setDisplayError(null);
+
+    const usernameErrors = validateUsername(formData.username);
+    if (usernameErrors.length > 0) {
+      setErrors(usernameErrors);
+      setIsFormValid(false);
+      return;
+    }
 
     try {
       const response = await fetch(`${apiUrl}/api/auth/update-profile`, {
@@ -62,20 +98,24 @@ export const Profile = () => {
         throw new Error("Erreur serveur, veuillez réessayer");
 
       const data = await response.json();
-
-      // Mettre à jour le state local et le token si nécessaire
       setUser(data.user);
-      if (data.token) {
-        localStorage.setItem("JWT", data.token);
-        setToken(data.token);
-      }
+      setRefresh(!refresh);
 
-      // Message de succès
-      setDisplayError("Profil mis à jour avec succès !");
-    } catch (error) {
-      setDisplayError(error.message);
+      setErrors(["Profil mis à jour avec succès !"]);
+      setIsFormValid(true);
+    } catch (err) {
+      setErrors([err.message]);
+      setIsFormValid(false);
     }
   };
+
+  const formattedDate = user?.created_at
+    ? new Date(user.created_at).toLocaleDateString("fr-FR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      })
+    : "";
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
@@ -94,26 +134,32 @@ export const Profile = () => {
         </p>
         <p className="mt-2 text-gray-600 text-sm">ID: {user.id}</p>
 
-        <form
-          className="mt-6 text-left space-y-4"
-          onSubmit={handleOnSubmitForm}
-        >
+        <form className="mt-6 text-left space-y-4" onSubmit={handleSubmit}>
           <InputField
             label="Nom d'utilisateur"
             type="text"
             name="username"
             value={formData.username}
-            onChange={handleChange}
-            validationError={displayError}
+            onChange={handleFieldChange}
           />
 
-          <InputField
-            label="URL de l'image de profil"
-            type="text"
-            name="image_url"
-            value={formData.image_url}
-            onChange={handleChange}
-          />
+          <div className="flex justify-between items-end gap-2 w-full">
+            <InputField
+              label="URL de l'image de profil"
+              type="text"
+              name="image_url"
+              value={formData.image_url}
+              onChange={handleFieldChange}
+            />
+
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(true)}
+              className="bg-blue-600 text-white px-3 py-1.5 rounded-md text-sm"
+            >
+              Choisir
+            </button>
+          </div>
 
           <button
             type="submit"
@@ -123,9 +169,21 @@ export const Profile = () => {
             Mettre à jour
           </button>
 
-          {displayError && <ErrorMessage displayError={displayError} />}
+          {errors.map((err, i) => (
+            <ErrorMessage
+              key={i}
+              displayError={err}
+              valid={err === "Profil mis à jour avec succès !"}
+            />
+          ))}
         </form>
       </div>
+
+      <PpChooseModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        setNewUrl={handleModalImageSelect}
+      />
     </div>
   );
 };
