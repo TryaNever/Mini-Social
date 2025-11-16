@@ -4,7 +4,7 @@ import { useAuth } from "../providers/AuthProviders";
 import { InputField } from "../components/commun/inputField";
 import { ErrorMessage } from "../components/commun/ErrorMessage";
 const apiUrl = import.meta.env.VITE_API_URL;
-export const SinIn = () => {
+export default function SinIn() {
   const [displayError, setDisplayError] = useState(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const [validationError, setValidationError] = useState({});
@@ -35,13 +35,11 @@ export const SinIn = () => {
   const validateUsername = (username) => {
     if (!username.trim()) return "Le champ ne peut pas être vide";
     if (username.length < 6 || username.length > 16)
-      return "Le mot de passe doit être entre 12 et 20 caractères";
+      return "Le npm d'utilisateur doit être entre 6 et 16 caractères";
     return null;
   };
 
   function handleOnChangeInput(e) {
-    console.log("test");
-
     const { name, value } = e.target;
 
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -59,7 +57,7 @@ export const SinIn = () => {
     const isValid =
       !validateEmail(name === "email" ? value : formData.email) &&
       !validatePassword(name === "password" ? value : formData.password) &&
-      !validatePassword(name === "username" ? value : formData.username);
+      !validateUsername(name === "username" ? value : formData.username);
 
     setIsFormValid(isValid);
   }
@@ -105,7 +103,7 @@ export const SinIn = () => {
           label="Adresse Mail"
           type="text"
           name="email"
-          onchange={handleOnChangeInput}
+          onChange={handleOnChangeInput}
           validationError={validationError.email}
           placeholder="votre@mail.com"
         />
@@ -113,7 +111,7 @@ export const SinIn = () => {
           label="Nom d'utilisateur"
           type="username"
           name="username"
-          onchange={handleOnChangeInput}
+          onChange={handleOnChangeInput}
           validationError={validationError.username}
           placeholder="Votre pseudo"
         />
@@ -121,7 +119,7 @@ export const SinIn = () => {
           label="Votre mot de passe"
           type="password"
           name="password"
-          onchange={handleOnChangeInput}
+          onChange={handleOnChangeInput}
           validationError={validationError.password}
           placeholder=""
         />
@@ -138,4 +136,4 @@ export const SinIn = () => {
       </form>
     </div>
   );
-};
+}

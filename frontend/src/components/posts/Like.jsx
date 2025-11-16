@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { Suspense, useState } from "react";
+import { DisplayComment } from "../comments/DisplayComment";
 const apiUrl = import.meta.env.VITE_API_URL;
 export const Like = ({ post }) => {
   const [like, setLike] = useState(false);
@@ -23,64 +24,36 @@ export const Like = ({ post }) => {
   }
 
   return (
-    <div className="flex items-center justify-between pt-4 border-t border-slate-700/50 mt-4">
+    <Suspense>
       <button
-        onClick={() => {
+        onClick={(e) => {
+          e.stopPropagation();
           if (localStorage.getItem("JWT")) {
             handleLike();
             return;
           }
           window.location.href = "/connexion";
         }}
-        className="group flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800/50 hover:bg-slate-800 border border-slate-700/50 hover:border-red-500/50 transition-all duration-300 hover:scale-105 active:scale-95"
+        className="group flex items-center gap-2 px-2 py-1 rounded-md 
+             transition-colors duration-200 
+             hover:bg-gray-100 active:bg-gray-200"
       >
-        <div className="relative">
-          <i
-            className={`ri-heart-${
-              like ? "fill" : "line"
-            } text-2xl transition-all duration-300 ${
-              like
-                ? "text-red-500 animate-pulse"
-                : "text-slate-400 group-hover:text-red-400"
-            }`}
-          ></i>
-          {!like && (
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity">
-              <i className="ri-heart-fill text-2xl text-red-500/20 blur-sm"></i>
-            </div>
-          )}
-        </div>
-        <div className="flex items-center gap-1.5">
-          <span
-            className={`text-sm font-bold transition-colors ${
-              like ? "text-red-400" : "text-slate-300 group-hover:text-white"
-            }`}
-          >
-            {post.likes}
-          </span>
-          <span className="text-xs font-medium text-slate-500 group-hover:text-slate-400 transition-colors">
-            {post.likes > 1 ? "j'aime" : "j'aime"}
-          </span>
-        </div>
-        {like && (
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full">
-              <div className="absolute top-0 left-1/4 text-red-400 opacity-50 animate-ping">
-                <i className="ri-heart-fill text-xs"></i>
-              </div>
-            </div>
-          </div>
-        )}
+        <i
+          className={`ri-heart-${
+            like ? "fill" : "line"
+          } text-xl transition-colors ${
+            like ? "text-red-600" : "text-black goup-hover:text-red-500"
+          }`}
+        ></i>
+
+        <span
+          className={`text-sm font-medium transition-colors ${
+            like ? "text-red-600" : "text-black"
+          }`}
+        >
+          {post.likes}
+        </span>
       </button>
-      <div className="flex items-center gap-4 text-slate-500">
-        <div className="flex items-center gap-1.5 text-sm">
-          <i className="ri-chat-3-line text-lg"></i>
-          <span className="font-medium">{post.comments?.length || 0}</span>
-        </div>
-        <div className="flex items-center gap-1.5 text-sm">
-          <i className="ri-share-line text-lg"></i>
-        </div>
-      </div>
-    </div>
+    </Suspense>
   );
 };

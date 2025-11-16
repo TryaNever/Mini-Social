@@ -6,7 +6,7 @@ import { InputField } from "../components/commun/inputField";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export const Login = () => {
+export default function Login() {
   const [displayError, setDisplayError] = useState(null);
   const [isFormValid, setIsFormValid] = useState(false);
   const [formData, setFormData] = useState({
@@ -64,10 +64,10 @@ export const Login = () => {
       if (response.status === 500)
         throw new Error("Erreur serveur, veuillez réessayer");
 
-      const tokenData = await response.json();
+      const { token } = await response.json();
 
-      localStorage.setItem("JWT", tokenData.token);
-      setToken(tokenData.token);
+      localStorage.setItem("JWT", token);
+      setToken(token);
 
       navigate("/");
     } catch (error) {
@@ -89,7 +89,7 @@ export const Login = () => {
           label="Adresse Mail"
           type="text"
           name="email"
-          onchange={handleOnChangeInput}
+          onChange={handleOnChangeInput}
           validationError={validationError.email}
           placeholder="votre@mail.com"
         />
@@ -98,7 +98,7 @@ export const Login = () => {
           label="Votre mot de passe"
           type="password"
           name="password"
-          onchange={handleOnChangeInput}
+          onChange={handleOnChangeInput}
           validationError={validationError.password}
         />
 
@@ -115,4 +115,4 @@ export const Login = () => {
       </form>
     </div>
   );
-};
+}

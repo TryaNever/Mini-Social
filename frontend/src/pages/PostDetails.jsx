@@ -4,7 +4,7 @@ import { DisplayComment } from "../components/comments/DisplayComment";
 import { Like } from "../components/posts/Like";
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export const PostDetails = () => {
+export default function PostDetails() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -59,4 +59,4 @@ export const PostDetails = () => {
       <DisplayComment comments={post.comments || []} idPost={id} />
     </div>
   );
-};
+}

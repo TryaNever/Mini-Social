@@ -1,0 +1,8 @@
+optimisation de l'affichage 
+ajout de Alt dans la Home Page*
+Ajoute Suspend
+Ajout de tag d'optimisation dans les balise meta
+Création d'un squellete lors du chargement 
+Ajout d'une partie profile correction du Post
+ajout du robot.txt et du sitemap.xml
+modification accessibilité déplacement avec les tabulation scrore lighthouse 100 sauf perf
