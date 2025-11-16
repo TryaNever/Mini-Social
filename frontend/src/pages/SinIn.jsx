@@ -103,7 +103,7 @@ export default function SinIn() {
           label="Adresse Mail"
           type="text"
           name="email"
-          onchange={handleOnChangeInput}
+          onChange={handleOnChangeInput}
           validationError={validationError.email}
           placeholder="votre@mail.com"
         />
@@ -111,7 +111,7 @@ export default function SinIn() {
           label="Nom d'utilisateur"
           type="username"
           name="username"
-          onchange={handleOnChangeInput}
+          onChange={handleOnChangeInput}
           validationError={validationError.username}
           placeholder="Votre pseudo"
         />
@@ -119,7 +119,7 @@ export default function SinIn() {
           label="Votre mot de passe"
           type="password"
           name="password"
-          onchange={handleOnChangeInput}
+          onChange={handleOnChangeInput}
           validationError={validationError.password}
           placeholder=""
         />

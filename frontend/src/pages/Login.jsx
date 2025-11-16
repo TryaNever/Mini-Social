@@ -89,7 +89,7 @@ export default function Login() {
           label="Adresse Mail"
           type="text"
           name="email"
-          onchange={handleOnChangeInput}
+          onChange={handleOnChangeInput}
           validationError={validationError.email}
           placeholder="votre@mail.com"
         />
@@ -98,7 +98,7 @@ export default function Login() {
           label="Votre mot de passe"
           type="password"
           name="password"
-          onchange={handleOnChangeInput}
+          onChange={handleOnChangeInput}
           validationError={validationError.password}
         />
 
