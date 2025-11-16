@@ -8,20 +8,25 @@ export const DisplayComment = React.memo(({ comments, idPost }) => {
   return (
     <Suspense>
       <div className="relative inline-block">
-        <button
-          onClick={() => {
-            if (localStorage.getItem("JWT")) {
-              setCommentOpen(true);
-              return;
-            }
-            window.location.href = "/connexion";
-          }}
-        >
-          <i
-            className="ri-chat-1-line text-2xl cursor-pointer hover:text-blue-500 transition-colors"
-            title="Voir les commentaires"
-          ></i>
-        </button>
+        <div className="flex items-center text-sm transition-colors">
+          <button
+            className="flex items-center cursor-pointer hover:text-blue-500 transition-colors"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (localStorage.getItem("JWT")) {
+                setCommentOpen(true);
+                return;
+              }
+              window.location.href = "/connexion";
+            }}
+          >
+            <i
+              className="ri-chat-1-line text-2xl"
+              title="Voir les commentaires"
+            ></i>
+            <p>{comments.length || "0"}</p>
+          </button>
+        </div>
         {commentOpen && (
           <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm"
