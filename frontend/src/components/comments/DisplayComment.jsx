@@ -7,12 +7,16 @@ export const DisplayComment = React.memo(({ comments, idPost }) => {
   const [commentOpen, setCommentOpen] = useState(false);
   return (
     <Suspense>
-      <div className="relative inline-block">
+      <div
+        className="inline-block"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+      >
         <div className="flex items-center text-sm transition-colors">
           <button
             className="flex items-center cursor-pointer hover:text-blue-500 transition-colors"
-            onClick={(e) => {
-              e.stopPropagation();
+            onClick={() => {
               if (localStorage.getItem("JWT")) {
                 setCommentOpen(true);
                 return;

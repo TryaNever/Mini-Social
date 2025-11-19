@@ -21,7 +21,6 @@ export const Post = ({ post, index }) => {
     w-full 
     border border-gray-300
     hover:shadow-xl 
-    hover:scale-[1.02]
     transition-all 
     duration-300 
     cursor-pointer
