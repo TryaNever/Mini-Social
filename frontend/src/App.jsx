@@ -5,6 +5,7 @@ import { ProtectedRoute } from "./components/routes/ProtectedRoute";
 import { AuthProvider } from "./providers/AuthProviders";
 import React, { Suspense } from "react";
 import { Profile } from "./pages/Profile";
+import NewPost from "./pages/NewPost";
 const Home = React.lazy(() => import("./pages/Home"));
 const Login = React.lazy(() => import("./pages/Login"));
 const SinIn = React.lazy(() => import("./pages/SinIn"));
@@ -18,8 +19,10 @@ export default function App() {
         <Suspense fallback={<p>Chargement…</p>}>
           <Routes>
             <Route index element={<Home />} />
+
             <Route path="connexion" element={<Login />} />
             <Route path="inscription" element={<SinIn />} />
+
             <Route
               path="posts/:id"
               element={
@@ -28,14 +31,26 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+
             <Route
-              path="/profile"
+              path="posts/add"
+              element={
+                <ProtectedRoute>
+                  <NewPost />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="profile"
               element={
                 <ProtectedRoute>
                   <Profile />
                 </ProtectedRoute>
               }
-            ></Route>
+            />
+
+            <Route path="*" element={<p>Page introuvable</p>} />
           </Routes>
         </Suspense>
       </AuthProvider>

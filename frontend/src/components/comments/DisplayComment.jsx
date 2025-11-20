@@ -1,8 +1,12 @@
 import React, { Suspense, useState } from "react";
 import { Comment } from "./Comment";
 import { NewComment } from "./NewComment";
+import { useAuth } from "../../providers/AuthProviders";
+import { useNavigate } from "react-router-dom";
 
 export const DisplayComment = React.memo(({ comments, idPost }) => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const [commentsPatch, setCommentsPatch] = useState(comments);
   const [commentOpen, setCommentOpen] = useState(false);
   return (
@@ -17,11 +21,11 @@ export const DisplayComment = React.memo(({ comments, idPost }) => {
           <button
             className="flex items-center cursor-pointer hover:text-blue-500 transition-colors"
             onClick={() => {
-              if (localStorage.getItem("JWT")) {
+              if (isAuthenticated) {
                 setCommentOpen(true);
                 return;
               }
-              window.location.href = "/connexion";
+              navigate("/connexion");
             }}
           >
             <i
