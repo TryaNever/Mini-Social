@@ -1,8 +1,10 @@
 import React, { Suspense, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { useAuth } from "../../providers/AuthProviders";
+
 import { Comment } from "./Comment";
 import { NewComment } from "./NewComment";
-import { useAuth } from "../../providers/AuthProviders";
-import { useNavigate } from "react-router-dom";
 
 export const DisplayComment = React.memo(({ comments, idPost }) => {
   const navigate = useNavigate();

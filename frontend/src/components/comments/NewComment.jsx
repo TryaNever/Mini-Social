@@ -32,8 +32,8 @@ export const NewComment = ({ index, onCommentAdded }) => {
         onCommentAdded(newComment.comment);
       }
       input.value = "";
-    } catch (error) {
-      console.error("Erreur :", error);
+    } catch {
+      onCommentAdded(null);
     }
   }
 

@@ -1,5 +1,7 @@
 import { Suspense, useEffect, useState } from "react";
+
 import { PostSkeleton } from "../squeleton/PostSkeleton";
+
 import { Post } from "./Post";
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -16,8 +18,9 @@ export const PostList = () => {
         const { posts } = await response.json();
         setPosts(posts);
         setIsLoading(false);
-      } catch (error) {
-        console.log(error);
+      } catch {
+        setPosts(null);
+        setIsLoading(false);
       }
     };
 

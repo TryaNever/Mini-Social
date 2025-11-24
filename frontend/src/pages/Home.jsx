@@ -1,6 +1,7 @@
 import { Suspense } from "react";
-import { PostList } from "../components/posts/PostList";
 import { Helmet } from "react-helmet";
+
+import { PostList } from "../components/posts/PostList";
 
 export default function Home() {
   return (

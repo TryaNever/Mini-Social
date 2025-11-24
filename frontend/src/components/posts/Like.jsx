@@ -1,4 +1,5 @@
 import { Suspense, useState } from "react";
+
 import { DisplayComment } from "../comments/DisplayComment";
 const apiUrl = import.meta.env.VITE_API_URL;
 export const Like = ({ post }) => {
@@ -18,8 +19,8 @@ export const Like = ({ post }) => {
         post.likes += 1;
       }
       setLike((prev) => !prev);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      setLike(like);
     }
   }
 

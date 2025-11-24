@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../providers/AuthProviders";
 import { useState } from "react";
+
+import { useAuth } from "../../providers/AuthProviders";
 
 export const Navbar = () => {
   const navigate = useNavigate();

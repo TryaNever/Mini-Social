@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { useAuth } from "../providers/AuthProviders";
 import { InputField } from "../components/commun/inputField";
 import { ErrorMessage } from "../components/commun/ErrorMessage";
@@ -85,7 +86,7 @@ export default function SinIn() {
       setToken(token);
       navigate("/");
     } catch (error) {
-      console.error("Erreur :", error);
+      setDisplayError(error.message);
     }
   }
 
