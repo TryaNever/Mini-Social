@@ -22,4 +22,4 @@ jobs:
 
       - name: Run ESLint
         working-directory: ./frontend
-        run: npx eslint src --ext .js,.jsx
+        run: npx eslint src --ext .js,.jsx --ignore-path .eslintignore
