@@ -1,0 +1,27 @@
+name: Button Display
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  front-unit-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm install --legacy-peer-deps
+
+      - name: Run tests
+        working-directory: ./frontend
+        run: npm test
