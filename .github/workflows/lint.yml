@@ -1,12 +1,10 @@
-name: Frontend CI
+name: CI
 
 on:
   push:
-    branches:
-      - "**"
+    branches: [main]
   pull_request:
-    branches:
-      - "**"
+    branches: [main]
 
 jobs:
   test-and-lint:
@@ -16,15 +14,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: "npm"
+
+      - name: Cache ESLint
+        uses: actions/cache@v4
+        with:
+          path: .eslintcache
+          key: eslint-${{ hashFiles('src/**/*.js', 'src/**/*.jsx') }}
 
       - name: Install dependencies
-        working-directory: ./frontend
-        run: npm install --legacy-peer-deps
+        run: npm ci --legacy-peer-deps
 
       - name: Run ESLint
-        working-directory: ./frontend
-        run: npx eslint src --ext .js,.jsx --cache --max-warnings 0
+        run: npx eslint "src/**/*.{js,jsx}" --cache --max-warnings 0
