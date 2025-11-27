@@ -2,11 +2,7 @@ name: CI
 
 on:
   push:
-    branches:
-      - "**"
-  pull_request:
-    branches:
-      - "**"
+    branches: ["**"]
 
 jobs:
   test-and-lint:
@@ -22,14 +18,16 @@ jobs:
           node-version: 22
           cache: "npm"
 
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci --legacy-peer-deps
+
       - name: Cache ESLint
         uses: actions/cache@v4
         with:
-          path: .eslintcache
-          key: eslint-${{ hashFiles('src/**/*.js', 'src/**/*.jsx') }}
-
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+          path: ./frontend/.eslintcache
+          key: eslint-${{ hashFiles('frontend/src/**/*.{js,jsx}') }}
 
       - name: Run ESLint
+        working-directory: ./frontend
         run: npx eslint "src/**/*.{js,jsx}" --cache --max-warnings 0
