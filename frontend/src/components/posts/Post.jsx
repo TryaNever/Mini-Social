@@ -15,6 +15,7 @@ export const Post = ({ post, index }) => {
         tabIndex={0}
         className="
     bg-gray-50 
+    h-auto
     rounded-xl 
     shadow-md 
     overflow-hidden 

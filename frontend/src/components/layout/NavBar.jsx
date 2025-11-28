@@ -39,6 +39,18 @@ export const Navbar = () => {
             >
               Accueil
             </Link>
+            {isAuthenticated && (
+              <Link
+                to="posts/add"
+                className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${
+                  location.pathname === "posts/add"
+                    ? "bg-slate-800 text-purple-400"
+                    : "text-slate-400 hover:text-white hover:bg-slate-800/50"
+                }`}
+              >
+                Faire un Post
+              </Link>
+            )}
 
             {!isAuthenticated && (
               <>

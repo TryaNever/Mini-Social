@@ -1,6 +1,5 @@
 import { Suspense, useState } from "react";
 export const Comment = ({ comment }) => {
-  console.log(comment);
   const [imageRandomGenerate, setImageRandomGenerate] = useState(
     Math.random(1, 500)
   );
