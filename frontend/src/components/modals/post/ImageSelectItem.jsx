@@ -1,42 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { OrbitProgress } from "react-loading-indicators";
 
-export const ImageSelectItem = ({ setCurrentStep, setNewUrl }) => {
+export const ImageSelectItem = ({ idImage, setCurrentStep, setNewUrl }) => {
   const [loading, setLoading] = useState(true);
-  const [idCurrentImage, setIdCurrentImage] = useState(
-    Math.floor(Math.random() * 1084)
-  );
+  const [idPicture, setIdPicture] = useState(idImage);
 
-  function newImage() {
-    setIdCurrentImage();
+  useEffect(() => {
+    setIdPicture(idImage);
+  }, [idImage]);
+
+  const handleClick = () => {
+    setNewUrl(`https://picsum.photos/id/${idPicture}`);
+    setCurrentStep();
+  };
+
+  const handleLoad = () => {
+    setLoading(false);
+  };
+
+  const handleError = () => {
+    let newId = Math.floor(Math.random() * 1084);
+    setIdPicture(newId);
     setLoading(true);
-  }
+  };
 
   return (
     <div
-      className="flex items-center justify-center w-full aspect-square bg-gray-100 rounded overflow-hidden"
-      onClick={() => {
-        setNewUrl(`https://picsum.photos/id/${idImage}`);
-        setCurrentStep();
-      }}
+      className="flex items-center justify-center w-full aspect-square bg-gray-100 rounded overflow-hidden cursor-pointer"
+      onClick={handleClick}
     >
       {loading && (
-        <div className="flex items-center justify-center w-full h-full">
-          <p>chargement…</p>
-        </div>
+        <OrbitProgress variant="track-disc" color="#32cd32" size="small" text="Charg..." textColor="#a54c4c" />
       )}
 
       <img
-        src={`https://picsum.photos/id/${idCurrentImage}/300/300?cache=${Date.now()}`}
+        src={`https://picsum.photos/id/${idPicture}/300/300?cache=${Date.now()}`}
         alt="image miniature"
         className={`w-full h-full object-cover ${loading ? "hidden" : ""}`}
         crossOrigin="anonymous"
-        onLoad={() => {
-          setLoading(false);
-          setNewUrl();
-        }}
-        onError={() => {
-          newImage("https://picsum.photos/id/${idCurrentImage}/300/300");
-        }}
+        onLoad={handleLoad}
+        onError={handleError}
       />
     </div>
   );
