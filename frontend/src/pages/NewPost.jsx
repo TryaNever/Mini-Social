@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PostChooseModal } from "../components/modals/PostChooseModal";
+import { PostChooseModal } from "../components/modals/post/PostChooseModal";
 
 export default function NewPost() {
   const [currentStep, setCurrentStep] = useState(1);
