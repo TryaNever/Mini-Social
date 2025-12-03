@@ -17,12 +17,12 @@ export const PostChooseModal = ({ setNewUrl, setCurrentStep }) => {
   }, []);
 
   return (
-    <div className="bg-white w-full max-w-lg rounded-lg shadow-lg p-6 relative overflow-y-auto max-h-full">
+    <div className="bg-white w-full max-w-lg rounded-lg p-6 relative overflow-y-auto max-h-full">
       <h2 className="text-xl font-semibold mb-4 text-center">
         Exemple de choix
       </h2>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 gap-4">
         {randomNumbers.map((num, index) => (
           <ImageSelectItem
             key={index}
@@ -36,7 +36,7 @@ export const PostChooseModal = ({ setNewUrl, setCurrentStep }) => {
       <button
         tabIndex={0}
         onClick={generateRandomNumbers}
-        className="w-full py-2 px-3 bg-blue-600 text-white mt-3 rounded-md"
+        className="w-full py-2 px-3 bg-purple-600 text-white mt-3 rounded-md cursor-pointer"
       >
         Générer de nouvelles photos
       </button>

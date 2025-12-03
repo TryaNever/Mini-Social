@@ -26,11 +26,11 @@ export const ImageSelectItem = ({ idImage, setCurrentStep, setNewUrl }) => {
 
   return (
     <div
-      className="flex items-center justify-center w-full aspect-square bg-gray-100 rounded overflow-hidden cursor-pointer"
+      className="flex items-center justify-center w-full bg-gray-100 rounded overflow-hidden cursor-pointer"
       onClick={handleClick}
     >
       {loading && (
-        <OrbitProgress variant="track-disc" color="#32cd32" size="small" text="Charg..." textColor="#a54c4c" />
+        <OrbitProgress variant="track-disc" color="#8200db" size="small" text="" />
       )}
 
       <img
