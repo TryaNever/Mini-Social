@@ -166,6 +166,17 @@ export const Navbar = () => {
 
             {isAuthenticated && (
               <>
+              <Link
+              to="/posts/add"
+              onClick={() => setMenuOpen(false)}
+              className={`px-4 py-3 rounded-lg text-sm font-medium transition-all ${
+                location.pathname === "/posts/add"
+                  ? "bg-slate-700 text-purple-400"
+                  : "text-slate-300 hover:bg-slate-700 hover:text-white"
+              }`}
+            >
+              Faire un Post
+            </Link>
                 <Link
                   to="/profile"
                   onClick={() => setMenuOpen(false)}
