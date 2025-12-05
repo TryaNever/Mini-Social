@@ -1,42 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PostChooseModal } from "../components/modals/post/PostChooseModal";
+import { FormImgUrl } from "../components/newPost/FormImgUrl";
 
 export default function NewPost() {
   const [currentStep, setCurrentStep] = useState(1);
   const [currentUrl, setCurrentUrl] = useState("");
 
   function incrementStep() {
-    setCurrentStep(() => {
-      currentStep + 1
-    })
+    setCurrentStep((prev) => prev + 1)
   }
 
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white shadow-md rounded-xl p-6 max-w-md w-full text-center">
-        
-        {currentStep === 1 && (
-          <>
-          <form onSubmit={(e) => {
-          e.preventDefault()
-          const url = e.target.elements['url-image'].value
+  useEffect(() => {
+    if (currentStep !== 3) return
 
-          setCurrentUrl(url)
-          incrementStep()
-        }}>
-          <fieldset>
-            <legend></legend>
-            <label htmlFor="url-image">Ton URL<input type="text" name="url-image" id="url-image" /></label>
-          </fieldset>
-          <input type="submit" value="Submit" />
-        </form>
-          <PostChooseModal
-            setNewUrl={setCurrentUrl}
-            setCurrentStep={setCurrentStep}
-            currentStep={currentStep}
-          />
+  }, [currentStep])
+
+  return (
+    <div className="relative min-h-screen flex flex-col items-center justify-center bg-gray-100 pt-24">
+      <div className="fixed bg-white shadow-md rounded-xl p-6 max-w-md w-full text-center">
+        
+        {currentStep === 1 ? (
+          <>
+            <FormImgUrl setNewUrl={setCurrentUrl} incrementStep={incrementStep} />
+
+            <PostChooseModal
+             setNewUrl={setCurrentUrl}
+             setCurrentStep={setCurrentStep}
+             currentStep={currentStep}
+            />
           </> 
-        )}
+        ) : currentStep === 2 ? (<div>Etape 2</div>) : null}
       </div>
     </div>
   );

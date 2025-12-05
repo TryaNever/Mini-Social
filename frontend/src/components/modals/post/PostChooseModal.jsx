@@ -17,29 +17,34 @@ export const PostChooseModal = ({ setNewUrl, setCurrentStep }) => {
   }, []);
 
   return (
-    <div className="bg-white w-full max-w-lg rounded-lg p-6 relative overflow-y-auto max-h-full">
-      <h2 className="text-xl font-semibold mb-4 text-center">
-        Exemple de choix
-      </h2>
+    <div
+  className="bg-white  w-full max-w-lg   overflow-y-auto  max-h-[40vh] mt-4"
+>
+  <h2 className="text-lg font-semibold mb-4 text-center">
+    Exemple de choix
+  </h2>
 
-      <div className="grid grid-cols-4 gap-4">
-        {randomNumbers.map((num, index) => (
-          <ImageSelectItem
-            key={index}
-            idImage={num}
-            setCurrentStep={setCurrentStep}
-            setNewUrl={setNewUrl}
-          />
-        ))}
-      </div>
+  <div
+    className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-4 p-3"
+  >
+    {randomNumbers.map((num, index) => (
+      <ImageSelectItem
+        key={index}
+        idImage={num}
+        setCurrentStep={setCurrentStep}
+        setNewUrl={setNewUrl}
+      />
+    ))}
+  </div>
 
-      <button
-        tabIndex={0}
-        onClick={generateRandomNumbers}
-        className="w-full py-2 px-3 bg-purple-600 text-white mt-3 rounded-md cursor-pointer"
-      >
-        Générer de nouvelles photos
-      </button>
-    </div>
+  <button
+    tabIndex={0}
+    onClick={generateRandomNumbers}
+    className="w-full py-2 mt-5 bg-purple-600 text-white rounded-md font-medium hover:bg-purple-700 transition"
+  >
+    Générer de nouvelles photos
+  </button>
+</div>
+
   );
 };

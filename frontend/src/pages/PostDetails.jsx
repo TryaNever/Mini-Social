@@ -40,7 +40,7 @@ export default function PostDetails() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-lg mt-10 border border-gray-200">
+    <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-lg mt-10 border border-gray-200 pt-24">
       <img
         src={post.image_url}
         alt={post.content}

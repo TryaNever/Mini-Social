@@ -90,7 +90,7 @@ export default function SinIn() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 pt-24">
       <form
         className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 w-full max-w-md space-y-6"
         onSubmit={handleOnSubmitForm}
