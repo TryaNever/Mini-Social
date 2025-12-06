@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { Suspense } from "react";
 
 import { Navbar } from "./components/layout/NavBar";
 import { ProtectedRoute } from "./components/routes/ProtectedRoute";
 import { AuthProvider } from "./providers/AuthProviders";
-import React, { Suspense } from "react";
 import { Profile } from "./pages/Profile";
 import NewPost from "./pages/NewPost";
 const Home = React.lazy(() => import("./pages/Home"));

@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+
+jobs:
+  test-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install dependencies
+        working-directory: ./frontend
+        run: npm ci --legacy-peer-deps
+
+      - name: Cache ESLint
+        uses: actions/cache@v4
+        with:
+          path: ./frontend/.eslintcache
+          key: eslint-${{ hashFiles('frontend/src/**/*.{js,jsx}') }}
+
+      - name: Run ESLint
+        working-directory: ./frontend
+        run: npx eslint "src/**/*.{js,jsx}" --cache --max-warnings 0

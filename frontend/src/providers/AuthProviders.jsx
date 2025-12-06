@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+
 import Loader from "../components/commun/Loader";
 
 const AuthContext = createContext();
@@ -24,8 +25,7 @@ export const AuthProvider = ({ children }) => {
 
         const data = await res.json();
         setCurrentUser(data.user);
-      } catch (error) {
-        console.error(error);
+      } catch {
         localStorage.removeItem("JWT");
         setToken(null);
         setCurrentUser(null);

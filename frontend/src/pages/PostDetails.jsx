@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+
 import { DisplayComment } from "../components/comments/DisplayComment";
 import { Like } from "../components/posts/Like";
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -17,8 +18,6 @@ export default function PostDetails() {
 
         const res = await response.json();
         setPost(res.post);
-      } catch (error) {
-        console.error(error);
       } finally {
         setLoading(false);
       }

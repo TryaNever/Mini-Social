@@ -1,9 +1,9 @@
 import { useState } from "react";
+
 import { PostChooseModal } from "../components/modals/PostChooseModal";
 
 export default function NewPost() {
   const [currentStep, setCurrentStep] = useState(1);
-  const [currentUrl, setCurrentUrl] = useState("");
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
@@ -11,7 +11,6 @@ export default function NewPost() {
         <p>Cette fonctionnalité est en cours de développement, désolé !</p>
         {currentStep === 1 && (
           <PostChooseModal
-            setNewUrl={setCurrentUrl}
             setCurrentStep={setCurrentStep}
             currentStep={currentStep}
           />

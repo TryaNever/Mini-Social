@@ -1,23 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const PpChooseModal = ({ isOpen, onClose, setNewUrl }) => {
-  const [randomNumbers, setRandomNumbers] = useState([]);
-
-  function randomNumber() {
-    return Math.floor(Math.random() * 70);
-  }
+  const [randomNumbers, setRandomNumbers] = useState(() =>
+    Array.from({ length: 9 }, () => Math.floor(Math.random() * 70)),
+  );
 
   function generateRandomNumbers() {
-    const numbers = [];
-    for (let i = 0; i < 9; i++) {
-      numbers.push(randomNumber());
-    }
-    setRandomNumbers(numbers);
+    setRandomNumbers(
+      Array.from({ length: 9 }, () => Math.floor(Math.random() * 70)),
+    );
   }
-
-  useEffect(() => {
-    generateRandomNumbers();
-  }, []);
 
   if (!isOpen) return null;
 
@@ -44,8 +36,9 @@ export const PpChooseModal = ({ isOpen, onClose, setNewUrl }) => {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-4">
           {randomNumbers.map((num, index) => (
-            <div
+            <button
               key={index}
+              type="button"
               className="flex items-center justify-center w-full aspect-square bg-gray-100 rounded overflow-hidden"
               onClick={() => {
                 setNewUrl(`https://i.pravatar.cc/150?img=${num}`);
@@ -54,10 +47,10 @@ export const PpChooseModal = ({ isOpen, onClose, setNewUrl }) => {
             >
               <img
                 src={`https://i.pravatar.cc/150?img=${num}`}
-                alt="Photo de profil générée aléatoirement"
+                alt={`avatar ${num}`}
                 className="w-full h-full object-cover"
               />
-            </div>
+            </button>
           ))}
         </div>
         <button

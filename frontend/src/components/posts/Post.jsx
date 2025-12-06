@@ -1,8 +1,10 @@
 import { Suspense } from "react";
-import { DisplayComment } from "../comments/DisplayComment";
-import { Like } from "./Like";
-import { NewComment } from "../comments/NewComment";
 import { Link, useNavigate } from "react-router-dom";
+
+import { DisplayComment } from "../comments/DisplayComment";
+import { NewComment } from "../comments/NewComment";
+
+import { Like } from "./Like";
 
 export const Post = ({ post, index }) => {
   const navigate = useNavigate();

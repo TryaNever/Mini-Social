@@ -1,8 +1,5 @@
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 export const Comment = ({ comment }) => {
-  const [imageRandomGenerate, setImageRandomGenerate] = useState(
-    Math.random(1, 500)
-  );
   return (
     <Suspense>
       <div className="flex items-start space-x-4 bg-white p-5 rounded-xl shadow border border-gray-100">

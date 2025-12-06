@@ -1,24 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-export const PostChooseModal = ({ setNewUrl, setCurrentStep, currentStep }) => {
-  const [randomNumbers, setRandomNumbers] = useState([]);
-
-  function randomNumber() {
-    return Math.floor(Math.random() * 1084);
-  }
-
-  function generateRandomNumbers() {
+export const PostChooseModal = ({ setNewUrl, setCurrentStep }) => {
+  const [randomNumbers, setRandomNumbers] = useState(() => {
     const numbers = [];
     for (let i = 0; i < 16; i++) {
-      numbers.push(randomNumber());
+      numbers.push(Math.floor(Math.random() * 1084));
+    }
+    return numbers;
+  });
+
+  function regenerateRandomNumber() {
+    const numbers = [];
+    for (let i = 0; i < 16; i++) {
+      numbers.push(Math.floor(Math.random() * 1084));
     }
     setRandomNumbers(numbers);
   }
-
-  useEffect(() => {
-    generateRandomNumbers();
-  }, []);
-
   return (
     <div className="bg-white w-full max-w-lg rounded-lg shadow-lg p-6 relative overflow-y-auto max-h-full">
       <h2 className="text-xl font-semibold mb-4 text-center">
@@ -45,7 +42,7 @@ export const PostChooseModal = ({ setNewUrl, setCurrentStep, currentStep }) => {
       </div>
       <button
         tabIndex={0}
-        onClick={generateRandomNumbers}
+        onClick={regenerateRandomNumber}
         className="w-full py-2 px-3 bg-blue-600 text-white mt-3 rounded-md"
       >
         Génerer de nouvelle photo de profile
